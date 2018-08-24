@@ -4,8 +4,15 @@
   "description": "Node Chat application",
   "main": "index.js",
   "scripts": {
+    "start": "node server/server.js",
     "test": "teste"
   },
+  "engines": {
+    "node": "8.11.1"
+  },
   "author": "Ikram Hasib",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
 }
