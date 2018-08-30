@@ -5,14 +5,19 @@ socket.on('connect', function () {
 });
 
 socket.on('newMessage', function(message) {
+    var li = jQuery('<li></li>');
+    li.text(`${message.from}: ${message.text}`);
+    jQuery("#messages").append(li);
     console.log('newMessage', message);
 });
 
-socket.emit('createMessage', {
-    from: 'Jane',
-    text: 'Hi'
-}, function() {
-    console.log('Got it.');
+jQuery('#form').submit(function(e){
+    e.preventDefault();
+
+    socket.emit('createMessage', {
+        from: 'User',
+        text: jQuery('input[name="message"]').val()
+    });
 });
 
 socket.on('disconnect', function() {
