@@ -18,21 +18,22 @@ io.on('connection', (socket) => {
     socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app.'));
     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined.'));
 
-    socket.on('createMessage', (message) => {
-        console.log('createMessage', message);
-        io.emit('newMessage', generateMessage(message.from, message.text));
-    });
-
-    socket.on('createLocationMessage', (coords) => {
-        console.log('createLocationMessage',coords);
-        io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
-    });
-
-    // socket.on('createMessage', (message, callback) => {
+    // socket.on('createMessage', (message) => {
     //     console.log('createMessage', message);
     //     io.emit('newMessage', generateMessage(message.from, message.text));
-    //     callback();
     // });
+
+    socket.on('createLocationMessage', (coords, callback) => {
+        console.log('createLocationMessage',coords);
+        io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
+        callback();
+    });
+
+    socket.on('createMessage', (message, callback) => {
+        console.log('createMessage', message);
+        io.emit('newMessage', generateMessage(message.from, message.text));
+        callback();
+    });
 
     socket.on('disconnect', () => {
         console.log('User was Disconnect');
